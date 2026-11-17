@@ -102,4 +102,6 @@ Key decisions:
 
 ## Author
 
+bostur_l with Mistral help.
+
 Built as a training project for the Code2Work Angular team.
