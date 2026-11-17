@@ -20,8 +20,13 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
           contact().firstName | initials: contact().lastName
         }}</span>
         <h3 class="card-name">
+          <!-- innerHTML binding is required for SafeHtml (search-term highlighting). -->
           <a [routerLink]="['/contacts', contact().id]">
-            {{ contact().firstName | fullName: contact().lastName | highlight: searchTerm() }}
+            <span
+              [innerHTML]="
+                contact().firstName | fullName: contact().lastName | highlight: searchTerm()
+              "
+            ></span>
           </a>
         </h3>
         <button
