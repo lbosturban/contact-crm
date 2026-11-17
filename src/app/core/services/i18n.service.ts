@@ -122,7 +122,6 @@ const FR: Dictionary = {
   'nav.contacts': 'Contacts',
   'nav.categories': 'Catégories',
   'nav.favorites': 'Favoris',
-  'nav.newContact': 'Nouveau contact',
   'theme.toggle': 'Changer de thème',
   'lang.switch': 'Changer de langue',
   'footer.madeWith': 'Contact CRM — données locales, sans backend',

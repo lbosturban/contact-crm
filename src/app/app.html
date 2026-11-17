@@ -23,12 +23,16 @@
     <div class="header-tools">
       <button
         type="button"
-        class="icon-btn"
+        class="icon-btn lang-btn"
         (click)="i18n.toggleLanguage()"
         [attr.aria-label]="'lang.switch' | t"
         [title]="'lang.switch' | t"
       >
-        {{ i18n.language() === 'fr' ? 'EN' : 'FR' }}
+        @if (i18n.language() === 'fr') {
+          <span>🇫🇷 FR</span>
+        } @else {
+          <span>🇬🇧 EN</span>
+        }
       </button>
       <button
         type="button"
