@@ -42,7 +42,11 @@
         [attr.aria-label]="'theme.toggle' | t"
         [title]="'theme.toggle' | t"
       >
-        {{ themeService.theme() === 'light' ? '☾' : '☀' }}
+        @if (themeService.theme() === 'light') {
+          <span class="dark-moon" aria-hidden="true">🌙</span>
+        } @else {
+          <span aria-hidden="true">☀️</span>
+        }
       </button>
     </div>
   </header>

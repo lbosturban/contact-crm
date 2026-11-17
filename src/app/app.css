@@ -110,6 +110,12 @@
   border-color: var(--accent);
 }
 
+/* Darken the standard moon emoji so it reads as a crescent on light theme. */
+.dark-moon {
+  display: inline-block;
+  filter: brightness(65%) contrast(120%);
+}
+
 .app-main {
   flex: 1;
   width: 100%;
