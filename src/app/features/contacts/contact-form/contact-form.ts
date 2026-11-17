@@ -12,6 +12,7 @@ import { CategoryService } from '../../../core/services/category.service';
 import { I18nService } from '../../../core/services/i18n.service';
 import { strictEmailValidator, phoneValidator } from '../../../core/validators/custom-validators';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
 import { Deactivatable } from '../../../core/guards/can-deactivate.guard';
 import { AutofocusDirective } from '../../../core/directives/autofocus.directive';
 
@@ -21,7 +22,7 @@ import { AutofocusDirective } from '../../../core/directives/autofocus.directive
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, AutofocusDirective],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, CatNamePipe, AutofocusDirective],
   templateUrl: './contact-form.html',
   styleUrl: './contact-form.css',
 })

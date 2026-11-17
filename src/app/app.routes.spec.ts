@@ -30,37 +30,37 @@ describe('app routes', () => {
   }
 
   it('"/" renders the dashboard', async () => {
-    expect(await pageAt('/') instanceof DashboardPage).toBe(true);
+    expect((await pageAt('/')) instanceof DashboardPage).toBe(true);
   });
 
   it('"/contacts" renders the contact list', async () => {
-    expect(await pageAt('/contacts') instanceof ContactListPage).toBe(true);
+    expect((await pageAt('/contacts')) instanceof ContactListPage).toBe(true);
   });
 
   it('"/contacts/new" renders the contact form', async () => {
-    expect(await pageAt('/contacts/new') instanceof ContactFormPage).toBe(true);
+    expect((await pageAt('/contacts/new')) instanceof ContactFormPage).toBe(true);
   });
 
   it('"/contacts/:id" renders the detail of a seeded contact', async () => {
     const contact = TestBed.inject(ContactService).contacts()[0];
-    expect(await pageAt(`/contacts/${contact.id}`) instanceof ContactDetailPage).toBe(true);
+    expect((await pageAt(`/contacts/${contact.id}`)) instanceof ContactDetailPage).toBe(true);
   });
 
   it('"/categories" renders the category list', async () => {
-    expect(await pageAt('/categories') instanceof CategoryListPage).toBe(true);
+    expect((await pageAt('/categories')) instanceof CategoryListPage).toBe(true);
   });
 
   it('"/categories/new" renders the category form', async () => {
-    expect(await pageAt('/categories/new') instanceof CategoryFormPage).toBe(true);
+    expect((await pageAt('/categories/new')) instanceof CategoryFormPage).toBe(true);
   });
 
   it('"/categories/:id" renders the detail of a seeded category', async () => {
     const category = TestBed.inject(CategoryService).categories()[0];
-    expect(await pageAt(`/categories/${category.id}`) instanceof CategoryDetailPage).toBe(true);
+    expect((await pageAt(`/categories/${category.id}`)) instanceof CategoryDetailPage).toBe(true);
   });
 
   it('"/favorites" renders the favorites page', async () => {
-    expect(await pageAt('/favorites') instanceof FavoritesPage).toBe(true);
+    expect((await pageAt('/favorites')) instanceof FavoritesPage).toBe(true);
   });
 
   it('an unknown contact id redirects to the contacts list', async () => {

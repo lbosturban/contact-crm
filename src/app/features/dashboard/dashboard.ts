@@ -5,10 +5,12 @@ import { CategoryService } from '../../core/services/category.service';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { FullNamePipe } from '../../core/pipes/full-name.pipe';
 import { InitialsPipe } from '../../core/pipes/initials.pipe';
+import { CatNamePipe } from '../../core/pipes/category-name.pipe';
+import { BilingualText } from '../../core/models/category.model';
 
 interface CategoryStat {
   id: string;
-  name: string;
+  name: BilingualText;
   color: string;
   count: number;
 }
@@ -16,7 +18,7 @@ interface CategoryStat {
 /** Dashboard: global statistics, latest additions and per-category split. */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, TranslatePipe, FullNamePipe, InitialsPipe],
+  imports: [RouterLink, TranslatePipe, FullNamePipe, InitialsPipe, CatNamePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

@@ -8,6 +8,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { FullNamePipe } from '../../../core/pipes/full-name.pipe';
 import { InitialsPipe } from '../../../core/pipes/initials.pipe';
 import { JobLinePipe } from '../../../core/pipes/job-line.pipe';
+import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 
 /** Contact detail view, fed by contactResolver (route data → input binding). */
@@ -20,6 +21,7 @@ import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
     FullNamePipe,
     InitialsPipe,
     JobLinePipe,
+    CatNamePipe,
     ConfirmDialog,
   ],
   templateUrl: './contact-detail.html',

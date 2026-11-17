@@ -96,7 +96,9 @@ Key decisions:
   dark theme (`data-theme` attribute), responsive layouts and keyboard/ARIA support (skip link,
   labelled controls, `aria-pressed` favorites, focus-visible outlines).
 - **i18n** — a tiny FR/EN dictionary served through the `t` pipe, switchable from the header and
-  persisted per user; English is the fallback.
+  persisted per user; English is the fallback. Category names are fully bilingual too: a category
+  stores both an English and a French name (`BilingualText`), editable in the category form, and the
+  `catName` pipe renders the right one from the active language.
 
 ## Author
 

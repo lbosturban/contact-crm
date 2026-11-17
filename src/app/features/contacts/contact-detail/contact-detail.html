@@ -14,7 +14,9 @@
         <h1>{{ contact().firstName | fullName: contact().lastName }}</h1>
         <p>{{ contact().jobTitle | jobLine: contact().company }}</p>
         @if (category(); as category) {
-          <span class="badge" [style.background-color]="category.color">{{ category.name }}</span>
+          <span class="badge" [style.background-color]="category.color">{{
+            category | catName
+          }}</span>
         } @else {
           <span class="badge badge-muted">{{ 'contacts.uncategorized' | t }}</span>
         }

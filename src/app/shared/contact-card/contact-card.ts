@@ -8,11 +8,20 @@ import { InitialsPipe } from '../../core/pipes/initials.pipe';
 import { HighlightPipe } from '../../core/pipes/highlight.pipe';
 import { JobLinePipe } from '../../core/pipes/job-line.pipe';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { CatNamePipe } from '../../core/pipes/category-name.pipe';
 
 @Component({
   selector: 'app-contact-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, FullNamePipe, InitialsPipe, HighlightPipe, JobLinePipe, TranslatePipe],
+  imports: [
+    RouterLink,
+    FullNamePipe,
+    InitialsPipe,
+    HighlightPipe,
+    JobLinePipe,
+    TranslatePipe,
+    CatNamePipe,
+  ],
   template: `
     <article class="contact-card" role="listitem">
       <div class="card-head">
@@ -53,7 +62,9 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
       </ul>
 
       @if (category(); as category) {
-        <span class="badge" [style.background-color]="category.color">{{ category.name }}</span>
+        <span class="badge" [style.background-color]="category.color">{{
+          category | catName
+        }}</span>
       } @else {
         <span class="badge badge-muted">{{ 'contacts.uncategorized' | t }}</span>
       }

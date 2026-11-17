@@ -3,25 +3,26 @@ import { RouterLink } from '@angular/router';
 import { Category } from '../../../core/models/category.model';
 import { ContactService } from '../../../core/services/contact.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
 import { ContactCard } from '../../../shared/contact-card/contact-card';
 
 /** Lists every contact belonging to one category (resolved by categoryResolver). */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, TranslatePipe, ContactCard],
+  imports: [RouterLink, TranslatePipe, CatNamePipe, ContactCard],
   template: `
     <section class="page">
       <nav class="breadcrumb">
         <a routerLink="/categories">{{ 'categories.title' | t }}</a>
         <span aria-hidden="true">/</span>
-        <span>{{ category().name }}</span>
+        <span>{{ category() | catName }}</span>
       </nav>
 
       <header class="page-header">
         <div>
           <h1>
             <span class="dot dot-lg" [style.background-color]="category().color"></span>
-            {{ 'categories.contactsIn' | t }} {{ category().name }}
+            {{ 'categories.contactsIn' | t }} {{ category() | catName }}
           </h1>
           <p class="page-subtitle">{{ contacts().length }} {{ 'contacts.count' | t }}</p>
         </div>

@@ -4,12 +4,13 @@ import { CategoryService, RemoveCategoryResult } from '../../../core/services/ca
 import { I18nService } from '../../../core/services/i18n.service';
 import { Category } from '../../../core/models/category.model';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 
 /** Category directory with create, edit, delete (guarded) actions. */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, TranslatePipe, ConfirmDialog],
+  imports: [RouterLink, TranslatePipe, CatNamePipe, ConfirmDialog],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })

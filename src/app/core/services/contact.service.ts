@@ -52,9 +52,24 @@ export class ContactService {
    */
   private seed(): Contact[] {
     const categories: Category[] = [
-      { id: generateId(), name: 'Students', color: '#2563eb', createdAt: nowIso() },
-      { id: generateId(), name: 'Companies', color: '#059669', createdAt: nowIso() },
-      { id: generateId(), name: 'Partners', color: '#d97706', createdAt: nowIso() },
+      {
+        id: generateId(),
+        name: { en: 'Students', fr: 'Étudiants' },
+        color: '#2563eb',
+        createdAt: nowIso(),
+      },
+      {
+        id: generateId(),
+        name: { en: 'Companies', fr: 'Entreprises' },
+        color: '#059669',
+        createdAt: nowIso(),
+      },
+      {
+        id: generateId(),
+        name: { en: 'Partners', fr: 'Partenaires' },
+        color: '#d97706',
+        createdAt: nowIso(),
+      },
     ];
     void this.storage.write('categories', categories);
 

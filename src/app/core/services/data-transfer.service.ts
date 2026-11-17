@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../models/contact.model';
-import { Category } from '../models/category.model';
+import { Category, BilingualText } from '../models/category.model';
 import { DataSnapshot } from './contact.service';
 
 /**
@@ -76,7 +76,22 @@ export function isCategory(value: unknown): value is Category {
   const category = value as Partial<Category>;
   return (
     typeof category.id === 'string' &&
-    typeof category.name === 'string' &&
+    isValidCategoryName(category.name) &&
     typeof category.color === 'string'
+  );
+}
+
+/** Accepts the bilingual shape ({ en, fr }) and legacy plain string names. */
+function isValidCategoryName(name: unknown): boolean {
+  if (typeof name === 'string') {
+    return name.trim().length > 0;
+  }
+  if (typeof name !== 'object' || name === null) {
+    return false;
+  }
+  const bilingual = name as Partial<BilingualText>;
+  return (
+    (typeof bilingual.en === 'string' && bilingual.en.trim().length > 0) ||
+    (typeof bilingual.fr === 'string' && bilingual.fr.trim().length > 0)
   );
 }

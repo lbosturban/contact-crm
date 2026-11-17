@@ -7,6 +7,7 @@ import { DataTransferService } from '../../../core/services/data-transfer.servic
 import { I18nService } from '../../../core/services/i18n.service';
 import { Contact, ContactFilters, ContactSort } from '../../../core/models/contact.model';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
 import { AutofocusDirective } from '../../../core/directives/autofocus.directive';
 import { DebounceInputDirective } from '../../../core/directives/debounce-input.directive';
 import { ContactCard } from '../../../shared/contact-card/contact-card';
@@ -23,6 +24,7 @@ const SORT_OPTIONS: ContactSort[] = ['nameAsc', 'nameDesc', 'dateDesc', 'dateAsc
     FormsModule,
     RouterLink,
     TranslatePipe,
+    CatNamePipe,
     AutofocusDirective,
     DebounceInputDirective,
     ContactCard,

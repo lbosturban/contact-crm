@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Category } from '../models/category.model';
+import { Category, BilingualText } from '../models/category.model';
 import { ContactService } from './contact.service';
 import { StorageService } from './storage.service';
 import { generateId, nowIso } from '../utils/id';
@@ -14,8 +14,9 @@ export type RemoveCategoryResult = 'removed' | 'notFound' | 'inUse';
 
 /**
  * Single source of truth for categories, persisted through StorageService.
- * Deletion is atomic with the contact repository: a category cannot be
- * removed while at least one contact references it.
+ * Names are bilingual (EN/FR); deletion is atomic with the contact
+ * repository: a category cannot be removed while at least one contact
+ * references it.
  */
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
@@ -46,7 +47,15 @@ export class CategoryService {
   private load(): Category[] {
     const stored = this.storage.read<Category[]>(STORAGE_KEY);
     if (Array.isArray(stored)) {
-      return stored;
+      // One-time migration: older exports stored plain string names.
+      return stored.map((entry) => {
+        const rawName: unknown = entry?.name;
+        const name: BilingualText =
+          typeof rawName === 'string'
+            ? { en: rawName, fr: rawName }
+            : ((rawName as BilingualText) ?? { en: '', fr: '' });
+        return { ...entry, name };
+      });
     }
     // ContactService seeds the default categories on first launch; if it
     // has not run yet there is nothing to load.
@@ -64,6 +73,7 @@ export class CategoryService {
     }
     const category: Category = {
       ...draft,
+      name: normalizeName(draft.name),
       id: generateId(),
       createdAt: nowIso(),
     };
@@ -73,17 +83,27 @@ export class CategoryService {
     return category;
   }
 
-  /** Returns null when the category does not exist or the name is taken. */
+  /** Returns null when the category does not exist or a name is taken. */
   update(id: string, changes: Partial<CategoryDraft>): Category | null {
-    const { name } = changes;
-    if (typeof name === 'string' && this.exists(name, id)) {
-      return null;
-    }
     const previous = this.getById(id);
     if (!previous) {
       return null;
     }
-    const updated: Category = { ...previous, ...changes, id: previous.id };
+    // Merge a partial bilingual name with the previous one, then guard
+    // against duplicates in both languages before persisting.
+    const name: BilingualText = {
+      en: changes.name?.en ?? previous.name.en,
+      fr: changes.name?.fr ?? previous.name.fr,
+    };
+    if (this.exists(name, id)) {
+      return null;
+    }
+    const updated: Category = {
+      ...previous,
+      ...changes,
+      name,
+      id: previous.id,
+    };
     if (!this.persist(this._categories().map((entry) => (entry.id === id ? updated : entry)))) {
       return null;
     }
@@ -106,12 +126,24 @@ export class CategoryService {
       : 'notFound';
   }
 
-  /** Case-insensitive uniqueness check, optionally excluding one id. */
-  exists(name: string, excludeId?: string): boolean {
-    const normalized = name.trim().toLowerCase();
-    return this._categories().some(
-      (entry) => entry.id !== excludeId && entry.name.trim().toLowerCase() === normalized,
-    );
+  /**
+   * Case-insensitive uniqueness across both languages: a candidate is a
+   * duplicate when its EN or FR name matches an existing EN or FR name.
+   */
+  exists(name: BilingualText, excludeId?: string): boolean {
+    const candidates = [name.en, name.fr]
+      .map((value) => value.trim().toLowerCase())
+      .filter((value) => value.length > 0);
+    if (candidates.length === 0) {
+      return false;
+    }
+    return this._categories().some((entry) => {
+      if (entry.id === excludeId) {
+        return false;
+      }
+      const existing = [entry.name.en, entry.name.fr].map((value) => value.trim().toLowerCase());
+      return candidates.some((value) => existing.includes(value));
+    });
   }
 
   /** Replaces the whole state (used by the JSON import feature). */
@@ -129,4 +161,8 @@ export class CategoryService {
     }
     return ok;
   }
+}
+
+function normalizeName(name: BilingualText): BilingualText {
+  return { en: name.en.trim(), fr: name.fr.trim() };
 }

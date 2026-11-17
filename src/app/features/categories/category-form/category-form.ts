@@ -8,8 +8,10 @@ import { AsyncValidatorFn } from '@angular/forms';
 import { hexColorValidator } from '../../../core/validators/custom-validators';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { AutofocusDirective } from '../../../core/directives/autofocus.directive';
-import { map, of } from 'rxjs';
-/** Shared create/edit page for categories, with async duplicate-name check. */
+import { Category } from '../../../core/models/category.model';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+/** Shared create/edit page for categories, with bilingual names (EN/FR) and async duplicate check. */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, RouterLink, TranslatePipe, AutofocusDirective],
@@ -24,8 +26,7 @@ export class CategoryFormPage implements Deactivatable {
   private readonly i18n = inject(I18nService);
 
   /** Preloaded by categoryResolver on the /categories/:id/edit route. */
-  private readonly editing = this.route.snapshot.data['category'] as
-    { id: string; name: string; color: string } | undefined;
+  private readonly editing = this.route.snapshot.data['category'] as Category | undefined;
 
   protected readonly isEdit = this.editing !== undefined;
   private readonly saved = signal(false);
@@ -33,24 +34,33 @@ export class CategoryFormPage implements Deactivatable {
   protected readonly errorMessage = signal<string | null>(null);
 
   protected readonly form = this.formBuilder.group({
-    name: [
-      this.editing?.name ?? '',
+    /** Both language versions are required, with their own duplicate check. */
+    nameEn: [
+      this.editing?.name.en ?? '',
       [Validators.required, Validators.maxLength(40)],
-      [this.uniqueNameValidator()],
+      [this.uniqueNameValidator('en')],
+    ],
+    nameFr: [
+      this.editing?.name.fr ?? '',
+      [Validators.required, Validators.maxLength(40)],
+      [this.uniqueNameValidator('fr')],
     ],
     color: [this.editing?.color ?? '#2563eb', [Validators.required, hexColorValidator()]],
   });
 
-  /** Rejects a name already used by another category. */
-  private uniqueNameValidator(): AsyncValidatorFn {
+  /** Async validator rejecting a name already used by another category. */
+  private uniqueNameValidator(language: 'en' | 'fr'): AsyncValidatorFn {
     return (control) => {
-      const value = String(control.value ?? '').trim();
-      if (!value) {
+      const name =
+        language === 'en'
+          ? { en: String(control.value ?? ''), fr: this.form?.controls.nameFr.value ?? '' }
+          : { en: this.form?.controls.nameEn.value ?? '', fr: String(control.value ?? '') };
+      if (!name.en.trim() || !name.fr.trim()) {
         return of(null);
       }
       return of(null).pipe(
         map(() =>
-          this.categoryService.exists(value, this.editing?.id) ? { duplicate: true } : null,
+          this.categoryService.exists(name, this.editing?.id) ? { duplicate: true } : null,
         ),
       );
     };
@@ -60,12 +70,12 @@ export class CategoryFormPage implements Deactivatable {
     return !this.form.dirty || this.saved();
   }
 
-  hasError(name: 'name' | 'color'): boolean {
+  hasError(name: 'nameEn' | 'nameFr' | 'color'): boolean {
     const control = this.form.controls[name];
     return control.invalid && (control.dirty || control.touched || this.submitAttempted());
   }
 
-  errorFor(name: 'name' | 'color'): string | null {
+  errorFor(name: 'nameEn' | 'nameFr' | 'color'): string | null {
     const { errors } = this.form.controls[name];
     if (!errors) {
       return null;
@@ -82,8 +92,11 @@ export class CategoryFormPage implements Deactivatable {
       this.form.markAllAsTouched();
       return;
     }
-    const { name, color } = this.form.getRawValue();
-    const draft = { name: name.trim(), color };
+    const { nameEn, nameFr, color } = this.form.getRawValue();
+    const draft = {
+      name: { en: nameEn.trim(), fr: nameFr.trim() },
+      color,
+    };
     const category =
       this.isEdit && this.editing
         ? this.categoryService.update(this.editing.id, draft)

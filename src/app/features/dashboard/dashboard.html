@@ -57,10 +57,14 @@
             <li>
               <div class="cat-stat-head">
                 <span class="dot" [style.background-color]="stat.color"></span>
-                <span>{{ stat.name }}</span>
+                <span>{{ stat | catName }}</span>
                 <span class="cat-count">{{ stat.count }} {{ 'contacts.count' | t }}</span>
               </div>
-              <div class="bar-track" role="img" [attr.aria-label]="stat.name + ': ' + stat.count">
+              <div
+                class="bar-track"
+                role="img"
+                [attr.aria-label]="(stat | catName) + ': ' + stat.count"
+              >
                 <div
                   class="bar"
                   [style.width.%]="

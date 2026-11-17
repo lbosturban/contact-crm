@@ -90,7 +90,7 @@
       <select class="field" formControlName="categoryId">
         <option value="">{{ 'contacts.uncategorized' | t }}</option>
         @for (category of categoryService.categories(); track category.id) {
-          <option [value]="category.id">{{ category.name }}</option>
+          <option [value]="category.id">{{ category | catName }}</option>
         }
       </select>
     </label>

@@ -13,17 +13,31 @@
 
   <form class="card form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <label class="form-field">
-      <span>{{ 'categories.name' | t }} <em aria-hidden="true">*</em></span>
+      <span>{{ 'categories.nameEn' | t }} <em aria-hidden="true">*</em></span>
       <input
         type="text"
         class="field"
-        formControlName="name"
+        formControlName="nameEn"
         appAutofocus
-        [attr.aria-invalid]="hasError('name')"
-        [attr.aria-describedby]="hasError('name') ? 'name-error' : null"
+        [attr.aria-invalid]="hasError('nameEn')"
+        [attr.aria-describedby]="hasError('nameEn') ? 'nameEn-error' : null"
       />
-      @if (hasError('name'); as message) {
-        <span class="form-error" id="name-error" role="alert">{{ message }}</span>
+      @if (hasError('nameEn'); as message) {
+        <span class="form-error" id="nameEn-error" role="alert">{{ message }}</span>
+      }
+    </label>
+
+    <label class="form-field">
+      <span>{{ 'categories.nameFr' | t }} <em aria-hidden="true">*</em></span>
+      <input
+        type="text"
+        class="field"
+        formControlName="nameFr"
+        [attr.aria-invalid]="hasError('nameFr')"
+        [attr.aria-describedby]="hasError('nameFr') ? 'nameFr-error' : null"
+      />
+      @if (hasError('nameFr'); as message) {
+        <span class="form-error" id="nameFr-error" role="alert">{{ message }}</span>
       }
     </label>
 
