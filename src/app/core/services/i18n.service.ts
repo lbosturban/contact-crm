@@ -59,6 +59,7 @@ const EN: Dictionary = {
   'contacts.exported': 'Export completed.',
   'contacts.exportVcard': 'Export as vCard',
   'contacts.importVcard': 'Import contacts (vCard)',
+  'contacts.importVcardLabel': 'Import v-card',
   'contacts.vcardImported': 'vCard import completed.',
   'contacts.vcardNone': 'No contact found in this file.',
 
@@ -174,6 +175,7 @@ const FR: Dictionary = {
   'contacts.exported': 'Export terminé.',
   'contacts.exportVcard': 'Exporter en vCard',
   'contacts.importVcard': 'Importer des contacts (vCard)',
+  'contacts.importVcardLabel': 'Importer v-card',
   'contacts.vcardImported': 'Import vCard terminé.',
   'contacts.vcardNone': 'Aucun contact trouvé dans ce fichier.',
 

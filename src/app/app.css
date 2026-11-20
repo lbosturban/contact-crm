@@ -106,6 +106,13 @@
   border-color: var(--accent);
 }
 
+/* Labeled import button: keep emoji and text side by side. */
+.icon-btn.import-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 /* Darken the standard moon emoji so it reads as a crescent on light theme. */
 .dark-moon {
   display: inline-block;

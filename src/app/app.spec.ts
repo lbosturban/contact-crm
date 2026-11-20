@@ -28,9 +28,10 @@ describe('App', () => {
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     const buttons = [...compiled.querySelectorAll('.header-tools .icon-btn')];
-    // Language, theme and vCard import buttons.
+    // Import (labeled), language and theme buttons.
     expect(buttons.length).toBe(3);
-    const importButton = buttons[2];
+    const importButton = buttons[0] as HTMLButtonElement;
+    expect(importButton.textContent).toContain('Import');
     expect(importButton.textContent).toContain('📥');
 
     let opened = false;
@@ -39,7 +40,7 @@ describe('App', () => {
       opened = true;
       return;
     };
-    (importButton as HTMLButtonElement).click();
+    importButton.click();
     expect(opened).toBe(true);
   });
 });

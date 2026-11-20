@@ -24,6 +24,25 @@
     <div class="header-tools">
       <button
         type="button"
+        class="icon-btn import-btn"
+        (click)="vcardInput.click()"
+        [attr.aria-label]="'contacts.importVcard' | t"
+        [title]="'contacts.importVcard' | t"
+      >
+        <span aria-hidden="true">📥</span>
+        {{ 'contacts.importVcardLabel' | t }}
+      </button>
+      <input
+        #vcardInput
+        type="file"
+        class="visually-hidden-input"
+        accept=".vcf,.vcard,text/vcard"
+        (change)="importVCard($event)"
+        tabindex="-1"
+        aria-hidden="true"
+      />
+      <button
+        type="button"
         class="icon-btn lang-btn"
         (click)="i18n.toggleLanguage()"
         [attr.aria-label]="'lang.switch' | t"
@@ -48,24 +67,6 @@
           <span aria-hidden="true">☀️</span>
         }
       </button>
-      <button
-        type="button"
-        class="icon-btn"
-        (click)="vcardInput.click()"
-        [attr.aria-label]="'contacts.importVcard' | t"
-        [title]="'contacts.importVcard' | t"
-      >
-        <span aria-hidden="true">📥</span>
-      </button>
-      <input
-        #vcardInput
-        type="file"
-        class="visually-hidden-input"
-        accept=".vcf,.vcard,text/vcard"
-        (change)="importVCard($event)"
-        tabindex="-1"
-        aria-hidden="true"
-      />
     </div>
   </header>
 
