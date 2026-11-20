@@ -9,6 +9,7 @@ import { FullNamePipe } from '../../../core/pipes/full-name.pipe';
 import { InitialsPipe } from '../../../core/pipes/initials.pipe';
 import { JobLinePipe } from '../../../core/pipes/job-line.pipe';
 import { CatNamePipe } from '../../../core/pipes/category-name.pipe';
+import { VCardService } from '../../../core/services/vcard.service';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 
 /** Contact detail view, fed by contactResolver (route data → input binding). */
@@ -31,6 +32,7 @@ export class ContactDetailPage {
   private readonly router = inject(Router);
   protected readonly contactService = inject(ContactService);
   protected readonly categoryService = inject(CategoryService);
+  private readonly vcardService = inject(VCardService);
 
   /** Resolved by contactResolver and bound thanks to withComponentInputBinding. */
   readonly contact = input.required<Contact>();
@@ -39,6 +41,11 @@ export class ContactDetailPage {
 
   toggleFavorite(): void {
     this.contactService.toggleFavorite(this.contact().id);
+  }
+
+  /** One-click vCard 4.0 export of this contact. */
+  exportVCard(): void {
+    this.vcardService.exportContact(this.contact(), this.category() ?? null);
   }
 
   requestDelete(): void {

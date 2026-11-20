@@ -12,7 +12,9 @@ Contact CRM lets any user:
 - mark contacts as favorites to find them faster;
 - search, filter and sort the directory (name, company, category, favorites only, A–Z / Z–A, newest / oldest);
 - view global statistics on a dashboard (total contacts, favorites, categories, latest additions, per-category split);
-- import and export the full data set (contacts + categories) as a JSON file.
+- import and export the full data set (contacts + categories) as a JSON file;
+- export any contact individually as a vCard 4.0 file (from its detail page or card), and import
+  contacts from a `.vcf` file with the header button — existing categories are re-attached by name.
 
 Deleting a category is blocked while contacts still belong to it, with a clear error message.
 A category or contact deletion always goes through an accessible confirmation dialog.
@@ -62,6 +64,7 @@ src/app/
 │   │   ├── contact.service.ts  # contact state (signal) + CRUD + seeding
 │   │   ├── category.service.ts # category state + usage counts + guarded delete
 │   │   ├── data-transfer.service.ts  # JSON import/export
+│   │   ├── vcard.service.ts    # vCard 4.0 (RFC 6350) per-contact export + import
 │   │   ├── theme.service.ts    # light/dark theme (persisted, OS-aware)
 │   │   └── i18n.service.ts     # minimal FR/EN dictionary
 │   ├── validators/             # strict email, phone and hex color validators

@@ -77,6 +77,9 @@
       <a class="btn btn-ghost" [routerLink]="['/contacts', contact().id, 'edit']">
         {{ 'contacts.edit' | t }}
       </a>
+      <button type="button" class="btn btn-ghost" (click)="exportVCard()">
+        {{ 'contacts.exportVcard' | t }}
+      </button>
       <button type="button" class="btn btn-danger" (click)="requestDelete()">
         {{ 'contacts.delete' | t }}
       </button>

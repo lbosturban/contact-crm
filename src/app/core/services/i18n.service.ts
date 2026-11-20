@@ -57,6 +57,10 @@ const EN: Dictionary = {
   'contacts.imported': 'Import completed.',
   'contacts.importInvalid': 'Invalid file: expected contacts and categories arrays.',
   'contacts.exported': 'Export completed.',
+  'contacts.exportVcard': 'Export as vCard',
+  'contacts.importVcard': 'Import contacts (vCard)',
+  'contacts.vcardImported': 'vCard import completed.',
+  'contacts.vcardNone': 'No contact found in this file.',
 
   'pagination.prev': 'Previous',
   'pagination.next': 'Next',
@@ -168,6 +172,10 @@ const FR: Dictionary = {
   'contacts.imported': 'Import terminé.',
   'contacts.importInvalid': 'Fichier invalide : tableaux contacts et catégories attendus.',
   'contacts.exported': 'Export terminé.',
+  'contacts.exportVcard': 'Exporter en vCard',
+  'contacts.importVcard': 'Importer des contacts (vCard)',
+  'contacts.vcardImported': 'Import vCard terminé.',
+  'contacts.vcardNone': 'Aucun contact trouvé dans ce fichier.',
 
   'pagination.prev': 'Précédent',
   'pagination.next': 'Suivant',

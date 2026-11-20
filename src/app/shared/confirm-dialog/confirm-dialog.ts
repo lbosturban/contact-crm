@@ -10,33 +10,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
   selector: 'app-confirm-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslatePipe],
-  template: `
-    <div
-      class="dialog-overlay"
-      role="presentation"
-      (click)="cancelled.emit()"
-      (keydown.escape)="cancelled.emit()"
-    >
-      <div
-        class="dialog"
-        role="alertdialog"
-        aria-modal="true"
-        [attr.aria-label]="title()"
-        (click)="$event.stopPropagation()"
-      >
-        <h2>{{ title() }}</h2>
-        <p>{{ message() }}</p>
-        <div class="dialog-actions">
-          <button type="button" class="btn btn-ghost" (click)="cancelled.emit()">
-            {{ 'confirm.no' | t }}
-          </button>
-          <button type="button" class="btn btn-danger" (click)="confirmed.emit()">
-            {{ 'confirm.yes' | t }}
-          </button>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './confirm-dialog.html',
 })
 export class ConfirmDialog {
   readonly title = input.required<string>();

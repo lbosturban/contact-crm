@@ -6,31 +6,7 @@ import { TranslatePipe } from '../../core/pipes/translate.pipe';
   selector: 'app-pager',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslatePipe],
-  template: `
-    @if (pageCount() > 1) {
-      <nav class="pager" aria-label="Pagination">
-        <button
-          type="button"
-          class="btn btn-ghost"
-          [disabled]="page() === 1"
-          (click)="pageChange.emit(page() - 1)"
-        >
-          {{ 'pagination.prev' | t }}
-        </button>
-        <span class="pager-status">
-          {{ 'pagination.page' | t }} {{ page() }} {{ 'pagination.of' | t }} {{ pageCount() }}
-        </span>
-        <button
-          type="button"
-          class="btn btn-ghost"
-          [disabled]="page() >= pageCount()"
-          (click)="pageChange.emit(page() + 1)"
-        >
-          {{ 'pagination.next' | t }}
-        </button>
-      </nav>
-    }
-  `,
+  templateUrl: './pager.html',
 })
 export class Pager {
   /** One-based current page. */
