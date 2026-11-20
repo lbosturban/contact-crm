@@ -22,4 +22,24 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.brand-text')?.textContent).toContain('Contact CRM');
   });
+
+  it('should render the vCard import button and drive the hidden file input', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const buttons = [...compiled.querySelectorAll('.header-tools .icon-btn')];
+    // Language, theme and vCard import buttons.
+    expect(buttons.length).toBe(3);
+    const importButton = buttons[2];
+    expect(importButton.textContent).toContain('📥');
+
+    let opened = false;
+    const hiddenInput = compiled.querySelector<HTMLInputElement>('.visually-hidden-input')!;
+    hiddenInput.click = () => {
+      opened = true;
+      return;
+    };
+    (importButton as HTMLButtonElement).click();
+    expect(opened).toBe(true);
+  });
 });
