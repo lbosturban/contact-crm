@@ -16,6 +16,7 @@ Contact CRM lets any user:
 - export any contact individually as a vCard 4.0 file (from its detail page or card), and import
   contacts from a `.vcf` file with the header button — existing categories are re-attached by name.
 
+
 Deleting a category is blocked while contacts still belong to it, with a clear error message.
 A category or contact deletion always goes through an accessible confirmation dialog.
 
